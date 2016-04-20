@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>事件对象各方法封装测试</title>
+	<script src="js/event.js"></script>
+</head>
+<body>
+	<div id="box">
+		<input id="btn" type="button" value="按钮"/>
+		<a href="https://www.baidu.com/" id="link">链接</a>
+	</div>
+
+<script>
+	function showMs(event){
+		event=eventHandle.getEvent(event);
+		var type=eventHandle.getType(event),
+			target=eventHandle.getTarget(event);
+		alert('我是'+this.id+' '+type+' '+target);
+		//阻止默认行为,a链接不跳转
+		eventHandle.preventDefault(event);
+		//阻止冒泡,父元素box不再alert
+		eventHandle.stopPropagation(event);
+	}
+	function showBx(){
+		alert("我是父元素box")
+	}
+
+	window.onload=function(){
+	var btn=document.getElementById("btn"),
+		a=document.getElementById("link"),
+		box=document.getElementById("box");
+	eventHandle.addEvent(btn,'click',showMs);
+	eventHandle.addEvent(a,'click',showMs);
+	eventHandle.addEvent(box,'click',showBx);
+	}
+</script>
+</body>
+</html>
